@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Bug & Bloom — Firebase Test</title>
+    <style>
+      body { font-family: system-ui, sans-serif; max-width: 760px; margin: 40px auto; padding: 0 16px; background: #f6f3ea; color: #1f2a1f; }
+      h1 { color: #2f5d3a; }
+      button { background: #2f5d3a; color: white; border: 0; padding: 12px 20px; border-radius: 8px; font-size: 16px; cursor: pointer; }
+      button:disabled { opacity: .5; cursor: wait; }
+      #log { margin-top: 20px; background: white; border-radius: 8px; padding: 16px; font-family: ui-monospace, monospace; font-size: 14px; white-space: pre-wrap; line-height: 1.6; }
+      .ok { color: #1e7a34; } .bad { color: #b3261e; font-weight: bold; }
+    </style>
+  </head>
+  <body>
+    <h1>🐛🌸 Firebase Test</h1>
+    <p>Click the button. It creates two test users, posts a project, submits a test, adds a comment and sends a DM — checking each step.</p>
+    <button id="run">Run full test</button>
+    <div id="log">Waiting…</div>
+    <script type="module" src="./test.js"></script>
+  </body>
+</html>
