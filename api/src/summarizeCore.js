@@ -7,12 +7,11 @@
 //   • the local dev server (vite.config.js) when you run `npm run dev`
 //
 // Settings (never put these in GitHub — use .env locally and Azure "Environment variables" online):
-//   AZURE_OPENAI_ENDPOINT    e.g. https://bug-bloom-ai.openai.azure.com
+//   AZURE_OPENAI_ENDPOINT    the "Azure OpenAI endpoint" from Foundry, e.g. https://my-resource.openai.azure.com/openai/v1/
 //   AZURE_OPENAI_KEY         the key from the Azure portal
-//   AZURE_OPENAI_DEPLOYMENT  the name you gave your model deployment, e.g. gpt-4o-mini
+//   AZURE_OPENAI_DEPLOYMENT  the deployment name you chose in Foundry, e.g. gpt-4.1-mini
 //   GEMINI_API_KEY           (optional backup if Azure OpenAI isn't available)
 
-const AZURE_API_VERSION = '2024-10-21';
 const MAX_TESTS = 40;
 
 const SYSTEM_PROMPT = `You are the Grove Spirit, a warm and practical guide in "Bug & Bloom", an app where student developers test each other's unfinished projects.
@@ -74,20 +73,26 @@ export function cleanResult(raw) {
   };
 }
 
+// Turns whatever endpoint was pasted into the base URL, e.g.
+//   https://x.openai.azure.com/openai/v1/   →  https://x.openai.azure.com
+export function azureBase(endpoint = '') {
+  return endpoint.trim().replace(/\/+$/, '').replace(/\/openai(\/.*)?$/i, '');
+}
+
+// Uses the Azure OpenAI "v1" API, which works with every current model
+// (gpt-4o-mini, gpt-4.1-mini, gpt-5-mini, newer ones…) without an api-version.
 async function callAzure(prompt, env) {
-  const endpoint = env.AZURE_OPENAI_ENDPOINT.replace(/\/+$/, '');
-  const deployment = env.AZURE_OPENAI_DEPLOYMENT || 'gpt-4o-mini';
-  const url = `${endpoint}/openai/deployments/${encodeURIComponent(deployment)}/chat/completions?api-version=${AZURE_API_VERSION}`;
+  const url = `${azureBase(env.AZURE_OPENAI_ENDPOINT)}/openai/v1/chat/completions`;
   const res = await fetch(url, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json', 'api-key': env.AZURE_OPENAI_KEY },
+    headers: { 'Content-Type': 'application/json', 'api-key': env.AZURE_OPENAI_KEY.trim() },
     body: JSON.stringify({
+      model: (env.AZURE_OPENAI_DEPLOYMENT || 'gpt-4o-mini').trim(),
       messages: [
         { role: 'system', content: SYSTEM_PROMPT },
         { role: 'user', content: prompt },
       ],
-      temperature: 0.4,
-      max_tokens: 800,
+      // no temperature / max_tokens: newer reasoning models reject them
       response_format: { type: 'json_object' },
     }),
   });
