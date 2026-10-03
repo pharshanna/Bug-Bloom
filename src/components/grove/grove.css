@@ -1,0 +1,81 @@
+/* src/components/grove/grove.css — styles for Sapling + SeedBadge. Owned by Person 4. */
+
+/* ---------- Sapling ---------- */
+.sapling {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.sapling svg {
+  display: block;
+  overflow: visible;
+}
+.sapling--sm svg { width: 72px; height: 72px; }
+.sapling--lg svg { width: 180px; height: 180px; }
+
+.sapling__plant {
+  transform-origin: 60px 100px;
+  animation: sapling-grow 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.sapling__sparkle {
+  animation: sapling-twinkle 2.4s ease-in-out infinite;
+}
+.sapling__sparkle:nth-of-type(2) { animation-delay: 0.8s; }
+.sapling__sparkle:nth-of-type(3) { animation-delay: 1.6s; }
+
+.sapling__label {
+  font-weight: 700;
+  color: var(--forest-700, #2f5d3a);
+  text-align: center;
+}
+.sapling--sm .sapling__label { font-size: 12px; }
+.sapling--lg .sapling__label { font-size: 16px; }
+.sapling__count {
+  font-size: 13px;
+  color: var(--text-muted, #5d6b5d);
+}
+
+@keyframes sapling-grow {
+  from { transform: scale(0.3); opacity: 0; }
+  to   { transform: scale(1);   opacity: 1; }
+}
+@keyframes sapling-twinkle {
+  0%, 100% { opacity: 0.2; transform: scale(0.8); }
+  50%      { opacity: 1;   transform: scale(1.15); }
+}
+
+/* ---------- SeedBadge ---------- */
+.seed-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--gold-light, #fbf0d4);
+  color: var(--bark, #6b4f3a);
+  border: 1.5px solid var(--gold, #d9a63a);
+  border-radius: 999px;
+  padding: 4px 12px 4px 8px;
+  font-weight: 700;
+  font-size: 15px;
+  white-space: nowrap;
+}
+.seed-badge__icon {
+  width: 18px;
+  height: 18px;
+}
+.seed-badge--pop {
+  animation: seed-pop 0.5s ease;
+}
+@keyframes seed-pop {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.25); }
+  100% { transform: scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sapling__plant,
+  .sapling__sparkle,
+  .seed-badge--pop {
+    animation: none;
+  }
+}

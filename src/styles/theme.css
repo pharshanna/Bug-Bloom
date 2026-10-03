@@ -1,0 +1,206 @@
+/* src/styles/theme.css — Bug & Bloom "Enchanted Grove" theme. Owned by Person 4.
+   Imported once in main.jsx. Everyone uses these variables + classes so the app looks consistent. */
+
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Nunito:wght@400;600;700&display=swap');
+
+:root {
+  /* Forest greens */
+  --forest-900: #1d3526;
+  --forest-700: #2f5d3a;
+  --forest-500: #4f8a5b;
+  --moss-300: #a9cf8f;
+  --moss-100: #e3efd8;
+
+  /* Warm accents */
+  --blossom: #d9708e;
+  --blossom-light: #f8dde5;
+  --gold: #d9a63a;
+  --gold-light: #fbf0d4;
+  --bark: #6b4f3a;
+
+  /* Surfaces + text */
+  --parchment: #f7f3e8;
+  --card: #fffdf7;
+  --border: #e4dcc8;
+  --text: #1f2a1f;
+  --text-muted: #5d6b5d;
+  --danger: #b3261e;
+  --danger-light: #fbe4e2;
+
+  /* Type */
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'Nunito', system-ui, -apple-system, sans-serif;
+
+  /* Shape */
+  --radius-sm: 8px;
+  --radius: 14px;
+  --radius-lg: 22px;
+  --shadow: 0 2px 10px rgba(29, 53, 38, 0.08);
+  --shadow-lift: 0 8px 24px rgba(29, 53, 38, 0.14);
+
+  /* Spacing */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--text);
+  background-color: var(--parchment);
+  /* soft glowing "forest light" in the background */
+  background-image:
+    radial-gradient(circle at 10% 0%, rgba(169, 207, 143, 0.35), transparent 40%),
+    radial-gradient(circle at 90% 10%, rgba(248, 221, 229, 0.5), transparent 35%);
+  background-attachment: fixed;
+  line-height: 1.55;
+  min-height: 100vh;
+}
+
+a {
+  color: var(--forest-700);
+}
+
+/* ---------- reusable classes ---------- */
+
+.grove-heading {
+  font-family: var(--font-display);
+  color: var(--forest-900);
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 0 0 var(--space-3);
+}
+
+.grove-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: var(--space-5);
+}
+
+.grove-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 15px;
+  padding: 10px 18px;
+  border-radius: 999px;
+  border: 2px solid var(--forest-700);
+  background: var(--forest-700);
+  color: #fff;
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+}
+.grove-button:hover {
+  background: var(--forest-900);
+  border-color: var(--forest-900);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow);
+}
+.grove-button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* outline version */
+.grove-button.secondary {
+  background: transparent;
+  color: var(--forest-700);
+}
+.grove-button.secondary:hover {
+  background: var(--moss-100);
+}
+
+/* pink accent version */
+.grove-button.blossom {
+  background: var(--blossom);
+  border-color: var(--blossom);
+}
+.grove-button.blossom:hover {
+  background: #c25576;
+  border-color: #c25576;
+}
+
+/* form fields */
+.grove-input,
+.grove-textarea {
+  width: 100%;
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: var(--text);
+  background: #fff;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.grove-textarea {
+  min-height: 96px;
+  resize: vertical;
+}
+.grove-input:focus,
+.grove-textarea:focus {
+  outline: none;
+  border-color: var(--forest-500);
+  box-shadow: 0 0 0 3px rgba(79, 138, 91, 0.2);
+}
+
+.grove-label {
+  display: block;
+  font-weight: 700;
+  margin-bottom: var(--space-2);
+  color: var(--forest-900);
+}
+
+.grove-muted {
+  color: var(--text-muted);
+}
+
+/* little pill tags */
+.grove-pill {
+  display: inline-block;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: var(--moss-100);
+  color: var(--forest-700);
+}
+
+/* messages */
+.grove-error {
+  background: var(--danger-light);
+  color: var(--danger);
+  border-radius: var(--radius-sm);
+  padding: var(--space-3) var(--space-4);
+  font-weight: 600;
+}
+.grove-success {
+  background: var(--moss-100);
+  color: var(--forest-700);
+  border-radius: var(--radius-sm);
+  padding: var(--space-3) var(--space-4);
+  font-weight: 700;
+}
